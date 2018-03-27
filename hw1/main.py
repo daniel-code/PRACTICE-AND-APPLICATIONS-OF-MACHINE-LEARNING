@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+from sklearn import svm
 from sklearn import datasets
 
 # mef
@@ -35,16 +36,22 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=TEST_NUM, ra
 model = LinearRegression()
 model.fit(X=x_train, y=y_train)
 y_predict = model.predict(X=x_test)
-print('sklearn score = ',model.score(X=x_test,y=y_test))
-print('sklearn coef = ',model.coef_)
-
+print('sklearn linear regression score = ',model.score(X=x_test,y=y_test))
+print('sklearn linear regression coef = ',model.coef_)
+print(model.get_params())
 #my_LR model
 model2 = my_LR.my_LR()
-model2.fit(x_train, y_train)
+model2.fit(X=x_train, y=y_train)
 y_predict2 = model2.predict(x_test)
 print('my_LR score = ',model2.score(X=x_test,y=y_test))
-print('my_LR vs sklearn score = ',model2.score(X=x_test,y=y_predict))
 print('my_LR coef = ',model2._thetas)
+print(model2.get_Params())
+
+#sklearn svm
+model3=svm.SVR()
+model3.fit(X=x_train,y=y_train)
+y_predict3=model3.predict(x_test)
+print('sklearn SVM regression score = ',model3.score(X=x_test,y=y_test))
 
 #plot predict
 plt.figure(figsize=(12,6))
@@ -54,6 +61,7 @@ plt.ylabel('Price')
 plt.plot(y_test, color='b',label='test data')
 plt.plot(y_predict,color='r',label='sk predict')
 plt.plot(y_predict2,color='g',label='my_LR predict')
+plt.plot(y_predict3,color='c',label='sklearn SVM')
 plt.legend(loc='upper right')
 plt.grid()
 plt.show()

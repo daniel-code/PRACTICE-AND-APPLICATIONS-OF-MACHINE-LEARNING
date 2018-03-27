@@ -25,20 +25,20 @@ class my_LR():
         # the y-intercept is the last element
         self._thetas = None
 
-    def fit(self, xs, ys):
+    def fit(self, X, y):
         """
         fit linear model
-        :param xs: feature data
-        :param ys: label data
+        :param X: feature data
+        :param y: label data
         :return: coefficient of model
         """
-        num_examples, num_features = np.shape(xs)
+        num_examples, num_features = np.shape(X)
         self._thetas = np.ones(num_features)
 
-        xs_transposed = xs.transpose()
+        xs_transposed = X.transpose()
         for i in range(self._max_iterations):
             # difference between our hypothesis and actual values
-            diffs = np.dot(xs, self._thetas) - ys
+            diffs = np.dot(X, self._thetas) - y
             # print('diffs = ',diffs)
             # sum of the squares
             cost = np.sum(diffs ** 2) / (2 * num_examples)
@@ -51,8 +51,12 @@ class my_LR():
             # check if fit is "good enough"
             if cost < self._tolerance:
                 return self._thetas
-
         return self._thetas
+
+    def get_Params(self):
+        return {'alpha': self._alpha,
+                'tolerance': self._tolerance,
+                'max_iterations': self._max_iterations}
 
     def predict(self, X):
         """
@@ -71,4 +75,6 @@ class my_LR():
         """
         predict = self.predict(X)
         diffs = predict - y
-        return np.sum(diffs ** 2) / len(X)
+        y_true_mean = np.array(y).mean()
+
+        return 1 - np.sum(diffs ** 2) / np.sum((y - y_true_mean) ** 2)
