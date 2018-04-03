@@ -1,4 +1,4 @@
 *.DS_Store
 .idea/*
-*.cpython-35/pyc
 *.pyc
+*.cpython-35.pyc
