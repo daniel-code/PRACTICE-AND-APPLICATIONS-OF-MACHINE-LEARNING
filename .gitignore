@@ -1,5 +1,2 @@
 *.DS_Store
 .idea/*
-*.pyc
-*.pyc
-hw1/__pycache__/my_LR.cpython-35.pyc
