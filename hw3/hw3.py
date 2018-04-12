@@ -24,7 +24,7 @@ attack_type_dict = attack_type.set_index('attack')['type'].to_dict()
 
 # build training data and label
 y = data[41].apply(lambda x: attack_type_dict[x])
-x = data.drop(columns=41)
+x = data.drop(columns=[1, 2, 3, 41])
 print(x)
 # statistics attack type
 hist = {}
@@ -46,17 +46,17 @@ plt.ylabel('Number')
 plt.grid(True)
 plt.show()
 
-x=np.array(x)
-y=np.array(y)
+x = np.array(x)
+y = np.array(y)
 # splite dataset into train and test set
-x_train, x_test, y_train, y_test = train_test_split(x[:,4:], y, test_size=0.2, random_state=0)
+x_train, x_test, y_train, y_test = train_test_split(x[:, 4:], y, test_size=0.2, random_state=0)
 
-#build model
-model=svm.SVC()
+# build model
+model = svm.SVC()
 print('---START TRAINING---')
-start_time=time.time()
-model.fit(X=x_train,y=y_train)
+start_time = time.time()
+model.fit(X=x_train, y=y_train)
 print('---END TRAIN---')
-print('Time = ',time.time()-start_time)
-score=model.score(X=x_test,y=y_test)
+print('Time = ', time.time() - start_time)
+score = model.score(X=x_test, y=y_test)
 print(score)
