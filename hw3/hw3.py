@@ -5,13 +5,15 @@ Author:daniel-code
 Date:2018.04.11
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
 import operator
-from sklearn import svm
-from sklearn.model_selection import train_test_split
 import time
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from sklearn import svm
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
 
 # read kdd date from csv
 
@@ -58,5 +60,10 @@ start_time = time.time()
 model.fit(X=x_train, y=y_train)
 print('---END TRAIN---')
 print('Time = ', time.time() - start_time)
+
+# predict
+predict = model.predict(x_test)
 score = model.score(X=x_test, y=y_test)
 print(score)
+print(predict)
+print(classification_report(y_test, predict))
